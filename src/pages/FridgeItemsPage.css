@@ -1,33 +1,258 @@
-.fridge-items-header {
+.fridge-items-banner {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 16px;
+  background: linear-gradient(135deg, var(--color-surface-container-low) 0%, var(--color-surface-container-highest) 100%);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
   margin-bottom: 18px;
 }
 
-.fridge-items-header h1 {
-  font-size: 22px;
-  font-weight: 800;
+.fridge-items-banner-main {
+  min-width: 0;
 }
 
-.fridge-items-header p {
+.fridge-items-banner-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-xs);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: 8px;
+}
+
+.fridge-items-banner-main h1 {
+  font-size: 21px;
+  font-weight: 800;
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.fridge-items-banner-main p {
   color: var(--color-ink-soft);
   font-size: 13px;
-  margin-top: 4px;
+  margin-top: 6px;
+  max-width: 46ch;
 }
 
-.fridge-items-header-actions {
+.fridge-items-banner-stats {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
   flex-shrink: 0;
+}
+
+.fridge-items-banner-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+  padding: 8px 12px;
+}
+
+.fridge-items-banner-stat-icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+}
+
+.fridge-items-banner-stat-icon--primary {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.fridge-items-banner-stat-icon--danger {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.fridge-items-banner-stat-icon--tertiary {
+  background: var(--color-tertiary-light);
+  color: var(--color-tertiary);
+}
+
+.fridge-items-banner-stat-label {
+  font-size: 10px;
+  color: var(--color-ink-faint);
+  white-space: nowrap;
+}
+
+.fridge-items-banner-stat-value {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+@media (max-width: 640px) {
+  .fridge-items-banner-stats {
+    width: 100%;
+  }
+
+  .fridge-items-banner-stat {
+    flex: 1 1 auto;
+  }
 }
 
 .fridge-items-toolbar {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
+}
+
+.fridge-storage-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+  min-width: 0;
+}
+
+.fridge-storage-tabs {
+  display: flex;
+  align-items: center;
+  flex: 1 1 260px;
+  min-width: 0;
+  gap: 4px;
+  padding: 4px;
+  background: var(--color-surface-container);
+  border-radius: var(--radius-full);
+}
+
+.fridge-storage-toolbar-actions {
+  display: flex;
+  align-items: center;
+  flex: 1 1 260px;
+  min-width: 0;
+  gap: 8px;
+}
+
+.fridge-storage-toolbar-actions > .btn {
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+}
+
+.fridge-storage-toolbar-actions > .btn span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 화면이 좁아서 탭·버튼 영역이 한 줄에 못 들어가면, 각자 자기 줄 전체 폭을 쓴다 */
+@media (max-width: 640px) {
+  .fridge-storage-tabs,
+  .fridge-storage-toolbar-actions {
+    flex-basis: 100%;
+  }
+}
+
+.fridge-scan-btn {
+  background: var(--color-surface);
+  color: var(--color-ink-soft);
+  border-color: transparent;
+  box-shadow: var(--shadow-xs);
+}
+
+/* 데스크탑에선 전체 라벨, 모바일에선 축약 라벨만 보여준다 */
+.fridge-toolbar-btn-short {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .fridge-toolbar-btn-full {
+    display: none;
+  }
+
+  .fridge-toolbar-btn-short {
+    display: inline;
+  }
+
+  .fridge-storage-toolbar-actions > .btn {
+    padding: 0 8px;
+    font-size: 11px;
+  }
+}
+
+.fridge-storage-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-ink-soft);
+  border-radius: var(--radius-full);
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.fridge-storage-tab--active {
+  background: var(--color-surface);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-sm);
+}
+
+.fridge-storage-tab-count {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-container-high);
+  color: var(--color-ink-faint);
+}
+
+.fridge-storage-tab--active .fridge-storage-tab-count {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.fridge-items-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 16px;
+  margin-bottom: 12px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+  color: var(--color-ink-faint);
+}
+
+.fridge-items-search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+  color: var(--color-ink);
+}
+
+.fridge-items-search-input::placeholder {
+  color: var(--color-ink-faint);
 }
 
 /* 재료 목록/재료 현황 탭 줄의 우측에 정렬 칩을 둔다. 좁으면 다음 줄로 내려간다. */
@@ -79,17 +304,282 @@
   gap: 10px;
 }
 
-.fridge-item-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: var(--color-surface);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card);
-  padding: 14px 18px;
+@media (min-width: 1024px) {
+  .fridge-item-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    align-items: start;
+  }
 }
 
-.fridge-item-main {
+.fridge-items-list-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-ink-soft);
+  margin-bottom: 12px;
+}
+
+.fridge-items-list-hint-note {
+  color: var(--color-ink-faint);
+  font-size: 12px;
+  padding: 6px 0px;
+}
+
+.fridge-items-list-hint-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fridge-items-select-all {
+  border: none;
+  background: transparent;
+  color: var(--color-primary-dark);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* 기준량+칼로리는 한 줄, 탄·단·지는 그 아래 한 줄에 색이 다른 동그란 배지로 묶어서 보여준다 */
+.fridge-item-card .nutrition-facts-line {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.fridge-item-card .nutrition-facts-macro {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fridge-item-card .nutrition-facts-macro-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.fridge-item-card .nutrition-facts-macro-value {
+  color: var(--color-ink-soft);
+  font-weight: 600;
+}
+
+.fridge-item-card .nutrition-facts-macro-label--carb {
+  background: var(--color-secondary-container);
+}
+
+.fridge-item-card .nutrition-facts-macro-label--protein {
+  background: var(--color-tertiary-container);
+}
+
+.fridge-item-card .nutrition-facts-macro-label--fat {
+  background: var(--color-primary);
+}
+
+.fridge-selection-bar {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(720px, calc(100% - 32px));
+  background: var(--color-ink);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 12px 16px;
+}
+
+/* 720px 초과부터는 사이드바(264px)가 보이니, 그 폭을 뺀 콘텐츠 영역 기준 정중앙으로 보정한다. */
+@media (min-width: 721px) {
+  .fridge-selection-bar {
+    left: calc(50% + 132px);
+  }
+}
+
+.fridge-selection-bar-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.fridge-selection-bar-count {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.fridge-selection-bar-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.fridge-selection-bar-names {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 260px;
+}
+
+.fridge-selection-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.fridge-selection-bar-cancel {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-danger);
+  border-radius: 999px;
+  background: var(--color-danger);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.fridge-selection-bar-cancel:hover {
+  background: #d3273f;
+  color: #fff;
+}
+
+.fridge-selection-bar-delete,
+.fridge-selection-bar-generate {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.fridge-selection-bar-delete {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.fridge-selection-bar-delete:hover {
+  background: rgba(244, 63, 94, 0.25);
+  color: #fff;
+}
+
+.fridge-selection-bar-generate {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.fridge-selection-bar-generate:hover {
+  background: var(--color-primary-dark);
+}
+
+@media (max-width: 640px) {
+  .fridge-selection-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .fridge-selection-bar-names {
+    max-width: 100%;
+  }
+
+  .fridge-selection-bar-actions {
+    justify-content: stretch;
+  }
+
+  .fridge-selection-bar-delete,
+  .fridge-selection-bar-generate {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+.fridge-item-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 14px 16px;
+  transition: box-shadow 0.15s ease;
+}
+
+.fridge-item-card--selected {
+  box-shadow: 0 0 0 2px var(--color-primary), var(--shadow-card);
+}
+
+.fridge-item-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.fridge-item-checkbox {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-border);
+  border-radius: 7px;
+  background: var(--color-surface);
+  color: #fff;
+}
+
+.fridge-item-card--selected .fridge-item-checkbox {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.fridge-item-card-thumb {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fridge-item-card-main {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -97,14 +587,51 @@
   gap: 4px;
 }
 
-.fridge-item-title {
+.fridge-item-card-tags {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
+}
+
+.fridge-item-card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-container-low);
+  color: var(--color-ink-soft);
+}
+
+.fridge-item-card-storage-icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.fridge-item-card-storage-icon[data-storage='REFRIGERATED'] {
+  color: var(--color-tertiary);
+}
+
+.fridge-item-card-storage-icon[data-storage='FROZEN'] {
+  color: #3b73c4;
+}
+
+.fridge-item-card-storage-icon[data-storage='ROOM_TEMP'] {
+  color: var(--color-secondary);
+}
+
+.fridge-item-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   min-width: 0;
 }
 
-.fridge-item-name {
+.fridge-item-card-name {
   min-width: 0;
   flex-shrink: 1;
   font-weight: 700;
@@ -114,121 +641,154 @@
   white-space: nowrap;
 }
 
-.fridge-item-quantity {
-  flex-shrink: 0;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-ink-soft);
-}
-
-.fridge-item-storage {
-  display: inline-flex;
-  align-items: center;
-  flex-shrink: 0;
-  gap: 4px;
-  padding-left: 10px;
-  border-left: 1px solid var(--color-border);
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--color-ink-soft);
-}
-
-.fridge-item-storage[data-storage='REFRIGERATED'] {
-  color: var(--color-primary-dark);
-}
-
-.fridge-item-storage[data-storage='FROZEN'] {
-  color: #3b73c4;
-}
-
-.fridge-item-storage[data-storage='ROOM_TEMP'] {
-  color: var(--color-warning);
-}
-
-.fridge-item-expiry-date {
-  font-size: 13px;
-  color: var(--color-ink-soft);
-}
-
-/* 칼로리/탄단지를 알약이 아니라 기준량 표기처럼 나열해서, 좁은 화면에서도 항목 단위로 줄바꿈되게 한다. */
-.fridge-item-nutrition {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 3px 10px;
-  font-size: 12px;
-}
-
-.fridge-item-nutrition-basis {
-  font-size: 11px;
-  color: var(--color-ink-faint);
-}
-
-.fridge-item-nutrition-kcal {
-  font-weight: 700;
-  color: var(--color-ink);
-}
-
-.fridge-item-nutrition-macro {
-  color: var(--color-ink-faint);
-}
-
-.fridge-item-memo {
-  font-size: 12px;
+.fridge-item-card-meta {
+  font-size: 12.5px;
   color: var(--color-ink-faint);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.fridge-item-side {
-  flex-shrink: 0;
+.fridge-item-card-progress {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  background: var(--color-surface-container-low);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
 }
 
-.fridge-item-actions {
+.fridge-item-card-progress-label {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+}
+
+.fridge-item-card-progress-track {
+  flex: 1;
+  min-width: 0;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-container-high);
+  overflow: hidden;
+}
+
+.fridge-item-card-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--color-safe);
+}
+
+.fridge-item-card-progress--warning .fridge-item-card-progress-fill {
+  background: var(--color-warning);
+}
+
+.fridge-item-card-progress--danger .fridge-item-card-progress-fill {
+  background: var(--color-danger);
+}
+
+.fridge-item-card-progress--neutral .fridge-item-card-progress-fill {
+  display: none;
+}
+
+.fridge-item-card-progress-value {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-ink-faint);
+  white-space: nowrap;
+}
+
+.fridge-item-card-progress--warning .fridge-item-card-progress-value {
+  color: var(--color-warning);
+}
+
+.fridge-item-card-progress--danger .fridge-item-card-progress-value {
+  color: var(--color-danger);
+}
+
+.fridge-item-card-progress--neutral .fridge-item-card-progress-label,
+.fridge-item-card-progress--neutral .fridge-item-card-progress-value {
+  color: var(--color-ink-faint);
+}
+
+.fridge-item-card-footer {
   display: flex;
-  gap: 4px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-/* 수정/삭제는 아이콘만 있는 정사각형 버튼 */
-.fridge-item-actions .btn {
-  width: 32px;
-  padding: 0;
+.fridge-item-card-date {
+  font-size: 12px;
+  color: var(--color-ink-soft);
 }
 
-/* 모바일: 아이콘·본문은 왼쪽, 소비기한 배지·수정/삭제는 오른쪽에 세로로 묶어서 배치 */
+.fridge-item-card-qty-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.fridge-item-card-qty {
+  flex-shrink: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-ink);
+}
+
+.fridge-item-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.fridge-item-card-actions button {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+}
+
+.fridge-item-card-actions-edit {
+  color: var(--color-warning);
+}
+
+.fridge-item-card-actions-edit:hover {
+  background: var(--color-warning-bg);
+}
+
+.fridge-item-card-actions-delete {
+  color: var(--color-danger);
+}
+
+.fridge-item-card-actions-delete:hover {
+  background: var(--color-danger-bg);
+}
+
+/* 모바일: 카드 패딩을 줄이고, 이름이 길면 뱃지가 다음 줄로 내려가게 한다 */
 @media (max-width: 640px) {
-  .fridge-item-row {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    grid-template-areas: 'icon main side';
-    align-items: center;
-    gap: 10px 12px;
-    padding: 14px;
+  .fridge-item-card {
+    padding: 12px;
   }
 
-  .fridge-item-row > .category-icon {
-    grid-area: icon;
+  .fridge-item-card-title-row {
+    flex-wrap: wrap;
+    row-gap: 4px;
   }
 
-  .fridge-item-main {
-    grid-area: main;
-  }
-
-  /* 메모가 길면 말줄임 대신 줄바꿈해서 옆 배지·버튼 영역을 침범하지 않게 한다. */
-  .fridge-item-memo {
+  .fridge-item-card-meta {
     white-space: normal;
     overflow-wrap: anywhere;
-  }
-
-  .fridge-item-side {
-    grid-area: side;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
   }
 }
 

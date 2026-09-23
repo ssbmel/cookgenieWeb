@@ -15,7 +15,7 @@ export default function CalendarPage() {
   const [selectedDate, setSelectedDate] = useState(todayString)
 
   return (
-    <div className="calendar-page">
+    <div className={`calendar-page${tab === 'calendar' ? ' calendar-page--fill' : ''}`}>
       <div className="calendar-page-header">
         <h1>식단 캘린더</h1>
         <p>오늘 먹은 음식과 하루 섭취 칼로리·탄단지를 기록해요</p>

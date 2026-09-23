@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import * as recipeApi from '../api/recipe'
 import Modal from './Modal'
 import Button from './Button'
+import RecipeDetailSkeleton from './RecipeDetailSkeleton'
 import '../styles/forms.css'
 import './RecipeDetailModal.css'
 
@@ -71,7 +72,7 @@ export default function RecipeDetailModal({ recipeId, fridgeId, onClose, onDelet
     <Modal
       title={recipe ? recipe.title : '레시피'}
       onClose={onClose}
-      width={560}
+      width={860}
       footer={
         recipe && (
           <Button variant="danger" onClick={handleDelete} disabled={deleting}>
@@ -80,72 +81,154 @@ export default function RecipeDetailModal({ recipeId, fridgeId, onClose, onDelet
         )
       }
     >
-      {loading && <p className="recipe-detail-hint">불러오는 중...</p>}
+      {loading && <RecipeDetailSkeleton />}
       {error && <div className="form-error">{error}</div>}
 
       {recipe && (
-        <div className="recipe-detail">
-          <div className="recipe-detail-tags">
-            <span className="recipe-detail-type">
-              {RECIPE_TYPE_LABEL[recipe.recipeType] ?? recipe.recipeType}
-            </span>
-            {recipe.tags?.map((tag) => (
-              <span key={tag} className="recipe-detail-tag">
-                #{tag}
+        <div className="recipe-detail-grid">
+          <div className="recipe-detail">
+            <div className="recipe-detail-tags">
+              <span className="recipe-detail-type">
+                {RECIPE_TYPE_LABEL[recipe.recipeType] ?? recipe.recipeType}
               </span>
-            ))}
+              {recipe.tags?.map((tag) => (
+                <span key={tag} className="recipe-detail-tag">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+
+            {(recipe.cookingType || recipe.servingSize) && (
+              <div className="recipe-detail-quickstats">
+                {recipe.cookingType && (
+                  <div className="recipe-detail-quickstat">
+                    <span>조리방식</span>
+                    <strong>{recipe.cookingType}</strong>
+                  </div>
+                )}
+                {recipe.servingSize && (
+                  <div className="recipe-detail-quickstat">
+                    <span>기준 분량</span>
+                    <strong>{recipe.servingSize}인분</strong>
+                  </div>
+                )}
+                {recipe.ingredients?.length > 0 && (
+                  <div className="recipe-detail-quickstat">
+                    <span>재료 수</span>
+                    <strong>{recipe.ingredients.length}개</strong>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {(recipe.caloriesPerServing != null ||
+              recipe.proteinG != null ||
+              recipe.carbohydrateG != null ||
+              recipe.fatG != null) && (
+              <div className="recipe-detail-macros">
+                {recipe.caloriesPerServing != null && (
+                  <div className="recipe-detail-macro">
+                    <span>칼로리</span>
+                    <strong className="is-primary">{recipe.caloriesPerServing}kcal</strong>
+                  </div>
+                )}
+                {recipe.proteinG != null && (
+                  <div className="recipe-detail-macro">
+                    <span>단백질</span>
+                    <strong className="is-tertiary">{recipe.proteinG}g</strong>
+                  </div>
+                )}
+                {recipe.carbohydrateG != null && (
+                  <div className="recipe-detail-macro">
+                    <span>탄수화물</span>
+                    <strong>{recipe.carbohydrateG}g</strong>
+                  </div>
+                )}
+                {recipe.fatG != null && (
+                  <div className="recipe-detail-macro">
+                    <span>지방</span>
+                    <strong>{recipe.fatG}g</strong>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {recipe.sourceUrl && (
+              <a href={recipe.sourceUrl} target="_blank" rel="noreferrer" className="recipe-detail-source">
+                {recipe.authorNickname ? `${recipe.authorNickname} · 원본 보기 ↗` : '원본 보기 ↗'}
+              </a>
+            )}
+
+            <h4 className="recipe-detail-section-title">조리 순서</h4>
+            <ol className="recipe-detail-instructions">
+              {recipe.instructions?.map((step, i) => (
+                <li key={i}>
+                  <div className="recipe-step-head">
+                    <span className="recipe-step-badge">STEP {String(i + 1).padStart(2, '0')}</span>
+                  </div>
+                  <span className="recipe-step-text">{renderStepText(step)}</span>
+                </li>
+              ))}
+            </ol>
           </div>
 
-          <p className="recipe-detail-meta">
-            {recipe.cookingType ? `${recipe.cookingType} · ` : ''}
-            {recipe.servingSize ? `${recipe.servingSize}인분` : ''}
-            {recipe.caloriesPerServing != null ? ` · ${recipe.caloriesPerServing}kcal` : ''}
-            {recipe.carbohydrateG != null ? ` · 탄 ${recipe.carbohydrateG}g` : ''}
-            {recipe.proteinG != null ? ` · 단 ${recipe.proteinG}g` : ''}
-            {recipe.fatG != null ? ` · 지 ${recipe.fatG}g` : ''}
-          </p>
-
-          {recipe.sourceUrl && (
-            <a href={recipe.sourceUrl} target="_blank" rel="noreferrer" className="recipe-detail-source">
-              {recipe.authorNickname ? `${recipe.authorNickname} · 원본 보기 ↗` : '원본 보기 ↗'}
-            </a>
-          )}
-
-          <h4 className="recipe-detail-section-title">재료</h4>
-          <ul className="recipe-detail-ingredients">
-            {recipe.ingredients?.map((ing) => {
-              const isAdded = addedNames.includes(ing.ingredientNameText)
-              const showAddButton = onAddToShopping && ing.inFridge === false
-              return (
-                <li key={ing.id} className={ing.matched ? 'is-matched' : ''}>
-                  <span>{ing.ingredientNameText}</span>
-                  <span className="recipe-detail-ingredient-right">
-                    <span className="recipe-detail-ingredient-qty">{ing.quantityText}</span>
-                    {showAddButton && (
-                      <button
-                        type="button"
-                        className="recipe-detail-add-btn"
-                        disabled={isAdded || addingName === ing.ingredientNameText}
-                        onClick={() => handleAddToShopping(ing)}
-                      >
-                        {isAdded ? '담았어요' : addingName === ing.ingredientNameText ? '담는 중...' : '🛒 담기'}
-                      </button>
-                    )}
-                  </span>
-                </li>
-              )
-            })}
-          </ul>
-
-          <h4 className="recipe-detail-section-title">조리 순서</h4>
-          <ol className="recipe-detail-instructions">
-            {recipe.instructions?.map((step, i) => (
-              <li key={i}>
-                <span className="recipe-step-badge">{i + 1}</span>
-                <span className="recipe-step-text">{renderStepText(step)}</span>
-              </li>
-            ))}
-          </ol>
+          {(() => {
+            const owned = recipe.ingredients?.filter((ing) => ing.matched) ?? []
+            const missing = recipe.ingredients?.filter((ing) => !ing.matched) ?? []
+            return (
+              <div className="recipe-detail-ingredient-groups">
+                <h4 className="recipe-detail-section-title recipe-detail-section-title--first">
+                  재료 점검 &amp; 매칭
+                </h4>
+                {owned.length > 0 && (
+                  <div className="recipe-detail-ingredient-group">
+                    <span className="recipe-detail-group-label recipe-detail-group-label--owned">
+                      우리집 냉장고 보유 재료
+                    </span>
+                    <ul className="recipe-detail-ingredients">
+                      {owned.map((ing) => (
+                        <li key={ing.id} className="is-matched">
+                          <span>{ing.ingredientNameText}</span>
+                          <span className="recipe-detail-ingredient-qty">{ing.quantityText}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {missing.length > 0 && (
+                  <div className="recipe-detail-ingredient-group">
+                    <span className="recipe-detail-group-label recipe-detail-group-label--missing">
+                      채워 넣으면 더 맛있는 재료
+                    </span>
+                    <ul className="recipe-detail-ingredients">
+                      {missing.map((ing) => {
+                        const isAdded = addedNames.includes(ing.ingredientNameText)
+                        const showAddButton = onAddToShopping && ing.inFridge === false
+                        return (
+                          <li key={ing.id}>
+                            <span>{ing.ingredientNameText}</span>
+                            <span className="recipe-detail-ingredient-right">
+                              <span className="recipe-detail-ingredient-qty">{ing.quantityText}</span>
+                              {showAddButton && (
+                                <button
+                                  type="button"
+                                  className="recipe-detail-add-btn"
+                                  disabled={isAdded || addingName === ing.ingredientNameText}
+                                  onClick={() => handleAddToShopping(ing)}
+                                >
+                                  {isAdded ? '담았어요' : addingName === ing.ingredientNameText ? '담는 중...' : '🛒 담기'}
+                                </button>
+                              )}
+                            </span>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )
+          })()}
         </div>
       )}
     </Modal>

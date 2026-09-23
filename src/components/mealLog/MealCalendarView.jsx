@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import * as mealLogApi from '../../api/mealLog'
 import { MEAL_TYPE_COLOR, MEAL_TYPE_LABEL, todayString } from '../../utils/mealType'
+import '../RecipeCardSkeleton.css'
 import './MealCalendarView.css'
 
 const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토']
@@ -76,6 +77,7 @@ export default function MealCalendarView({ selectedDate, onSelectDate }) {
 
   const days = buildGridDays(year, month)
   const today = todayString()
+  const weekRowCount = days.length / 7
 
   return (
     <div className="meal-calendar-view">
@@ -93,7 +95,10 @@ export default function MealCalendarView({ selectedDate, onSelectDate }) {
 
       {error && <div className="form-error">{error}</div>}
 
-      <div className="meal-calendar-grid">
+      <div
+        className="meal-calendar-grid"
+        style={{ gridTemplateRows: `auto repeat(${weekRowCount}, 1fr)` }}
+      >
         {WEEKDAYS.map((w) => (
           <div key={w} className="meal-calendar-weekday">
             {w}
@@ -111,29 +116,33 @@ export default function MealCalendarView({ selectedDate, onSelectDate }) {
               onClick={() => onSelectDate(date)}
             >
               <span className="meal-calendar-day">{day}</span>
-              {summary && (
-                <span className="meal-calendar-tags">
-                  {summary.meals.slice(0, 2).map((meal, i) => (
-                    <span
-                      key={i}
-                      className="meal-calendar-tag"
-                      style={{ background: MEAL_TYPE_COLOR[meal.mealType] }}
-                      title={`${MEAL_TYPE_LABEL[meal.mealType]}: ${meal.label}`}
-                    >
-                      {meal.label}
-                    </span>
-                  ))}
-                  {summary.meals.length > 2 && (
-                    <span className="meal-calendar-tag-more">+{summary.meals.length - 2}</span>
-                  )}
+              {loading && inMonth ? (
+                <span className="meal-calendar-tags" aria-hidden="true">
+                  <span className="skeleton-block meal-calendar-skeleton-tag" />
                 </span>
+              ) : (
+                summary && (
+                  <span className="meal-calendar-tags">
+                    {summary.meals.slice(0, 2).map((meal, i) => (
+                      <span
+                        key={i}
+                        className="meal-calendar-tag"
+                        style={{ background: MEAL_TYPE_COLOR[meal.mealType] }}
+                        title={`${MEAL_TYPE_LABEL[meal.mealType]}: ${meal.label}`}
+                      >
+                        {meal.label}
+                      </span>
+                    ))}
+                    {summary.meals.length > 2 && (
+                      <span className="meal-calendar-tag-more">+{summary.meals.length - 2}</span>
+                    )}
+                  </span>
+                )
               )}
             </button>
           )
         })}
       </div>
-
-      {loading && <p className="form-hint">불러오는 중...</p>}
     </div>
   )
 }

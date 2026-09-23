@@ -1,14 +1,16 @@
 .topbar {
   min-height: 68px;
   flex-shrink: 0;
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-topbar);
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
   padding: 14px 28px;
+  z-index: 100;
+  position: relative
 }
 
 .topbar-fridge {
@@ -32,6 +34,10 @@
 
 .topbar-new-fridge {
   flex-shrink: 0;
+  background: var(--color-surface);
+  color: var(--color-ink-soft);
+  border-color: transparent;
+  box-shadow: var(--shadow-xs);
 }
 
 .topbar-user {
@@ -41,21 +47,32 @@
   flex-shrink: 0;
 }
 
-.topbar-nickname {
-  font-weight: 700;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-.topbar-settings {
+.topbar-bell {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-ink-soft);
 }
 
-.topbar-settings svg {
-  width: 16px;
-  height: 16px;
+.topbar-bell:hover {
+  color: var(--color-ink);
+}
+
+.topbar-ocr-btn {
+  flex-shrink: 0;
+  background: var(--color-surface);
+  color: var(--color-ink-soft);
+  border-color: transparent;
+  box-shadow: var(--shadow-xs);
+}
+
+.topbar-generate-btn {
   flex-shrink: 0;
 }
 
@@ -91,19 +108,13 @@
   }
 
   .topbar-new-fridge,
-  .topbar-settings,
-  .topbar-logout {
+  .topbar-ocr-btn,
+  .topbar-generate-btn {
     width: 40px;
     padding: 0;
   }
 
   .topbar-label {
-    display: none;
-  }
-}
-
-@media (max-width: 420px) {
-  .topbar-nickname {
     display: none;
   }
 }

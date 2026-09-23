@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import * as ingredientApi from '../api/ingredient'
 import CategoryIcon from './CategoryIcon'
 import Button from './Button'
+import IngredientCategoryGridSkeleton from './IngredientCategoryGridSkeleton'
 import '../styles/forms.css'
 import './IngredientPicker.css'
 import './ShoppingItemPicker.css'
@@ -69,7 +70,7 @@ export default function ShoppingItemPicker({ onSelect }) {
         {error && <div className="form-error">{error}</div>}
 
         {suggestionsLoading ? (
-          <p className="form-hint">불러오는 중...</p>
+          <IngredientCategoryGridSkeleton />
         ) : (
           <div className="ingredient-category-grid">
             {suggestions.map((name) => (

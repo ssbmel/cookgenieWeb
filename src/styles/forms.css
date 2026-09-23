@@ -106,7 +106,7 @@
 }
 
 .btn-warning:hover:not(:disabled) {
-  background: #fbe6bf;
+  background: #ffe9cf;
 }
 
 .btn-danger {
@@ -115,7 +115,7 @@
 }
 
 .btn-danger:hover:not(:disabled) {
-  background: #fbdada;
+  background: #ffe0e3;
 }
 
 /* size: 기본(md)은 .btn 그대로, sm/lg만 높이·여백·글자 크기를 덮어쓴다. */

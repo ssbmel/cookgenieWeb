@@ -31,3 +31,14 @@ export const STORAGE_LOCATION_LABEL = {
   FROZEN: '냉동',
   ROOM_TEMP: '실온',
 }
+
+/** 구매일→소비기한 구간에서 오늘이 몇 % 지점인지(0~100). 둘 중 하나라도 없으면 null. */
+export function getShelfLifeProgress(purchasedAt, expiryDate) {
+  if (!purchasedAt || !expiryDate) return null
+  const start = new Date(purchasedAt).getTime()
+  const end = new Date(expiryDate).getTime()
+  if (end <= start) return 100
+  const now = Date.now()
+  const ratio = ((now - start) / (end - start)) * 100
+  return Math.min(100, Math.max(0, Math.round(ratio)))
+}

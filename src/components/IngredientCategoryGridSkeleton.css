@@ -1,0 +1,14 @@
+.ingredient-category-skeleton-card {
+  cursor: default;
+}
+
+.ingredient-category-skeleton-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+}
+
+.ingredient-category-skeleton-label {
+  width: 70%;
+  height: 12px;
+}

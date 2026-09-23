@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react'
 import * as shoppingApi from '../api/shopping'
-import Modal from './Modal'
-import './CoupangPriceModal.css'
+import './CoupangPriceResults.css'
 
 // 상품 이미지 로딩에 실패했을 때(광고 차단 확장 프로그램이 쿠팡 이미지 도메인을 막는 경우가 흔함) 대신 보여줄 아이콘.
 const PLACEHOLDER_IMAGE =
   'data:image/svg+xml;utf8,' +
   encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56"><rect width="56" height="56" rx="10" fill="#e4e9e7"/><path d="M16 20h24l-2 16H18l-2-16Z" fill="none" stroke="#93a29d" stroke-width="2"/><path d="M22 20v-3a6 6 0 0 1 12 0v3" fill="none" stroke="#93a29d" stroke-width="2"/></svg>'
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56"><rect width="56" height="56" rx="14" fill="#e1e8ff"/><path d="M16 20h24l-2 16H18l-2-16Z" fill="none" stroke="#8f7069" stroke-width="2"/><path d="M22 20v-3a6 6 0 0 1 12 0v3" fill="none" stroke="#8f7069" stroke-width="2"/></svg>'
   )
 
-export default function CoupangPriceModal({ keyword, onClose }) {
+export default function CoupangPriceResults({ keyword }) {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -26,7 +25,7 @@ export default function CoupangPriceModal({ keyword, onClose }) {
   }, [keyword])
 
   return (
-    <Modal title={`쿠팡 최저가 · ${keyword}`} onClose={onClose} width={480}>
+    <div className="coupang-results">
       <p className="coupang-disclaimer">쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받을 수 있습니다.</p>
 
       {loading && <p className="coupang-hint">검색 중...</p>}
@@ -67,6 +66,6 @@ export default function CoupangPriceModal({ keyword, onClose }) {
           </li>
         ))}
       </ul>
-    </Modal>
+    </div>
   )
 }

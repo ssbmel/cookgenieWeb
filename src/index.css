@@ -1,33 +1,69 @@
 @import "pretendard/dist/web/variable/pretendardvariable.css";
 
 :root {
-  --color-bg: #f4f7f6;
+  /* Sunset Apricot & Cool Frost — CookGenie 디자인 시스템 */
+  --mobile-tabbar-height: 72px;
+
+  --color-bg: #faf9ff;
   --color-surface: #ffffff;
-  --color-border: #e4e9e7;
+  --color-border: #e2e8f0;
 
-  --color-primary: #0ea37e;
-  --color-primary-dark: #0b7c60;
-  --color-primary-light: #e3f6f0;
+  --color-primary: #ff5e36;
+  --color-primary-dark: #b42901;
+  --color-primary-light: #ffdad2;
 
-  --color-ink: #172622;
-  --color-ink-soft: #5b6b66;
-  --color-ink-faint: #93a29d;
+  --color-secondary: #885200;
+  --color-secondary-container: #ffa940;
+  --color-secondary-light: #ffdcbc;
 
-  --color-sidebar: #16241f;
-  --color-sidebar-active: #1f3a30;
+  --color-tertiary: #006a61;
+  --color-tertiary-container: #2da498;
+  --color-tertiary-light: #89f5e7;
 
-  --color-danger: #e5484d;
-  --color-danger-bg: #fdecec;
-  --color-warning: #dc8b0e;
-  --color-warning-bg: #fdf3e0;
-  --color-safe: #1f9254;
-  --color-safe-bg: #e6f5ec;
+  --color-ink: #1e2638;
+  --color-ink-soft: #334155;
+  --color-ink-faint: #64748b;
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  --color-sidebar: #ffffff;
+  --color-sidebar-active: #ff6536;
 
-  --shadow-card: 0 1px 2px rgba(23, 38, 34, 0.04), 0 8px 24px rgba(23, 38, 34, 0.06);
+  --color-danger: #f43f5e;
+  --color-danger-bg: #fff1f2;
+  --color-warning: #ff6536;
+  --color-warning-bg: #fff7ed;
+  --color-safe: #0d9488;
+  --color-safe-bg: #f0fdfa;
+
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f1f3ff;
+  --color-surface-container: #e9edff;
+  --color-surface-container-high: #e1e8ff;
+  --color-surface-container-highest: #dae2fb;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  --space-2xs: 4px;
+  --space-xs: 6px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-base: 16px;
+  --space-lg: 20px;
+  --space-xl: 28px;
+
+  --shadow-card: 0px 4px 12px -4px rgba(255, 94, 54, 0.14), 0px 4px 10px -2px rgba(30, 38, 56, 0.08);
+  --shadow-xs: 0px 1px 2px rgba(30, 38, 56, 0.04), 0px 2px 6px -2px rgba(30, 38, 56, 0.06);
+  --shadow-sm: 0px 1px 3px rgba(30, 38, 56, 0.08), 0px 6px 16px -4px rgba(30, 38, 56, 0.12);
+  --shadow-lg: 0px 24px 48px -12px rgba(30, 38, 56, 0.22);
+  --shadow-sidebar: 2px 0px 15px rgba(218, 226, 251, 0.6);
+  --shadow-topbar: 0px 4px 16px -6px rgba(218, 226, 251, 0.7);
+
+  --font-heading: "Plus Jakarta Sans", "Pretendard Variable", -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Segoe UI", "Malgun Gothic", sans-serif;
+  --font-body: "Be Vietnam Pro", "Pretendard Variable", -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", "Segoe UI", "Malgun Gothic", sans-serif;
 
   color-scheme: light;
 }
@@ -46,9 +82,16 @@ body {
   margin: 0;
   background: var(--color-bg);
   color: var(--color-ink);
-  font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
-    "Segoe UI", "Malgun Gothic", sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  word-break: keep-all;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
 }
 
 button,
@@ -56,6 +99,33 @@ input,
 select,
 textarea {
   font-family: inherit;
+}
+
+/* 스켈레톤 로딩 공용 쉬머 효과 — 모든 스켈레톤 컴포넌트가 이 클래스를 공유한다 */
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface-container-high);
+}
+
+.skeleton-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    rgba(241, 245, 249, 0) 0%,
+    rgba(254, 215, 170, 0.55) 50%,
+    rgba(241, 245, 249, 0) 100%
+  );
+  animation: skeleton-shimmer 1.5s infinite;
 }
 
 button {

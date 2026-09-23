@@ -1,0 +1,66 @@
+.recipe-detail-skeleton-tag {
+  width: 60px;
+  height: 21px;
+  border-radius: 999px;
+}
+
+.recipe-detail-skeleton-tag--sm {
+  width: 44px;
+}
+
+.recipe-detail-skeleton-quickstat-label {
+  width: 70%;
+  height: 11px;
+  margin: 0 auto;
+}
+
+.recipe-detail-skeleton-quickstat-value {
+  width: 50%;
+  height: 14px;
+  margin: 4px auto 0;
+}
+
+.recipe-detail-skeleton-macro-label {
+  width: 60%;
+  height: 11px;
+  margin: 0 auto 4px;
+}
+
+.recipe-detail-skeleton-macro-value {
+  width: 45%;
+  height: 13px;
+  margin: 0 auto;
+}
+
+.recipe-detail-skeleton-section-title {
+  display: block;
+  width: 90px;
+  height: 14px;
+  margin: 16px 0 8px;
+}
+
+.recipe-detail-skeleton-step {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--color-surface-container-low);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.recipe-detail-skeleton-step-badge {
+  width: 56px;
+  height: 18px;
+  border-radius: 6px;
+}
+
+.recipe-detail-skeleton-step-text {
+  width: 85%;
+  height: 13px;
+}
+
+.recipe-detail-skeleton-ingredient {
+  height: 34px;
+  border-radius: var(--radius-sm);
+}

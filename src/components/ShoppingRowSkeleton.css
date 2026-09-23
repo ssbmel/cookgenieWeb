@@ -1,0 +1,23 @@
+.shopping-skeleton-checkbox {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 7px;
+}
+
+.shopping-skeleton-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+}
+
+.shopping-skeleton-name {
+  width: 45%;
+  height: 14px;
+}
+
+.shopping-skeleton-time {
+  width: 30%;
+  height: 12px;
+}

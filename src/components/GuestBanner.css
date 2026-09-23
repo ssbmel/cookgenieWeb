@@ -5,22 +5,54 @@
   flex-wrap: wrap;
   gap: 10px;
   background: var(--color-warning-bg);
-  color: var(--color-warning);
+  color: var(--color-secondary);
   padding: 10px 28px;
   font-size: 13px;
   font-weight: 600;
 }
 
+.guest-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
 .guest-banner-btn {
   flex-shrink: 0;
+  background: transparent;
+  color: var(--color-primary);
+  text-decoration: underline;
+  padding: 0 8px;
+}
+
+.guest-banner-btn:hover:not(:disabled) {
+  background: transparent;
+  color: var(--color-primary-dark);
+}
+
+.guest-banner-close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-secondary);
+  opacity: 0.7;
+}
+
+.guest-banner-close:hover {
+  opacity: 1;
+  background: rgba(255, 101, 54, 0.12);
 }
 
 @media (max-width: 720px) {
   .guest-banner {
     padding: 10px 16px;
-  }
-
-  .guest-banner-btn {
-    width: 100%;
   }
 }

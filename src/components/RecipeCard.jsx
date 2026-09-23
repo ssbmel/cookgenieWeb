@@ -6,11 +6,17 @@ export default function RecipeCard({ recipe, onClick, onDelete }) {
   const hasMatch = recipe.totalIngredientCount != null
   const fullyMakeable = hasMatch && recipe.matchedIngredientCount === recipe.totalIngredientCount
   const cardModifier = !hasMatch ? '' : fullyMakeable ? ' recipe-card--ready' : ' recipe-card--partial'
+  const matchPercent = hasMatch && recipe.totalIngredientCount > 0
+    ? Math.round((recipe.matchedIngredientCount / recipe.totalIngredientCount) * 100)
+    : null
 
   return (
     <div className={`recipe-card${cardModifier}`} onClick={onClick} role="button" tabIndex={0}>
       <div className="recipe-card-top">
         <span className="recipe-card-type">{RECIPE_TYPE_LABEL[recipe.recipeType] ?? recipe.recipeType}</span>
+        {matchPercent !== null && (
+          <span className="recipe-card-match-badge">내 재료 {matchPercent}% 일치</span>
+        )}
         {onDelete && (
           <button
             type="button"

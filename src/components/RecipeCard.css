@@ -1,7 +1,7 @@
 .recipe-card {
   background: var(--color-surface);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-xs);
   border-left: 3px solid transparent;
   padding: 16px 18px;
   cursor: pointer;
@@ -21,7 +21,7 @@
 
 .recipe-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(23, 38, 34, 0.08), 0 12px 28px rgba(23, 38, 34, 0.1);
+  box-shadow: 0 4px 10px rgba(30, 38, 56, 0.06), 0 16px 32px rgba(255, 94, 54, 0.12);
 }
 
 .recipe-card-top {
@@ -41,6 +41,15 @@
   color: var(--color-primary-dark);
 }
 
+.recipe-card-match-badge {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--color-secondary-container);
+  color: #fff;
+}
+
 .recipe-card-delete {
   background: none;
   border: none;
@@ -57,6 +66,7 @@
 .recipe-card-title {
   font-size: 16px;
   font-weight: 800;
+  font-family: var(--font-heading);
 }
 
 .recipe-card-meta {

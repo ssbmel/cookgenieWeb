@@ -1,7 +1,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 25, 22, 0.45);
+  background: rgba(30, 38, 56, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +16,7 @@
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 20px 60px rgba(15, 25, 22, 0.25);
+  box-shadow: var(--shadow-lg);
 }
 
 .modal-header {
@@ -28,7 +28,8 @@
 
 .modal-header h3 {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 800;
+  font-family: var(--font-heading);
 }
 
 .modal-close {

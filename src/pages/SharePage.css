@@ -128,6 +128,17 @@
   color: var(--color-primary-dark);
 }
 
+.share-skeleton-nickname {
+  width: 80px;
+  height: 14px;
+}
+
+.share-skeleton-tag {
+  width: 40px;
+  height: 18px;
+  border-radius: 999px;
+}
+
 .member-tag--me {
   background: var(--color-safe-bg);
   color: var(--color-safe);

@@ -21,6 +21,41 @@
   min-width: 0;
 }
 
+/* 칼로리/탄단지를 알약이 아니라 기준량 표기처럼 나열해서, 좁은 화면에서도 항목 단위로 줄바꿈되게 한다. */
+.nutrition-facts-line {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 3px 10px;
+  font-size: 12px;
+}
+
+.nutrition-facts-basis {
+  font-size: 11px;
+  color: var(--color-ink-faint);
+}
+
+.nutrition-facts-kcal {
+  font-weight: 700;
+  color: var(--color-ink);
+}
+
+.nutrition-facts-primary {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.nutrition-facts-macros {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px 10px;
+}
+
+.nutrition-facts-macro {
+  color: var(--color-ink-faint);
+}
+
 .nutrition-source {
   flex-shrink: 0;
   padding: 1px 6px;

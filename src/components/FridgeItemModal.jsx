@@ -109,19 +109,24 @@ export default function FridgeItemModal({
       <div className="fridge-item-modal-ingredient">
         <span>{ingredient.name}</span>
         {!isEdit && (
-          <Button variant="ghost" onClick={() => setIngredient(null)}>
+          <Button
+            variant="ghost"
+            className="fridge-item-modal-change-btn"
+            onClick={() => setIngredient(null)}
+          >
             변경
           </Button>
         )}
       </div>
 
-      <form id="fridge-item-form" onSubmit={handleSubmit}>
+      <form id="fridge-item-form" className="fridge-item-form" onSubmit={handleSubmit}>
         <div className="field-row">
           <div className="field">
             <label htmlFor="quantity">수량</label>
             <input
               id="quantity"
               type="number"
+              inputMode="decimal"
               min="0"
               step="0.1"
               className="input"

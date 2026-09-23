@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import Modal from '../Modal'
 import IngredientPicker from '../IngredientPicker'
 import * as recipeApi from '../../api/recipe'
@@ -6,7 +6,22 @@ import { useFridge } from '../../context/FridgeContext'
 import { MEAL_TYPE_LABEL } from '../../utils/mealType'
 import Button from '../Button'
 import '../../styles/forms.css'
+import '../RecipeCardSkeleton.css'
 import './AddMealLogModal.css'
+
+/** 저장된 레시피 목록을 불러오는 동안 .add-meal-recipe-item 자리 크기 그대로 자리표시자를 보여준다. */
+function RecipeListSkeleton({ count = 4 }) {
+  return (
+    <Fragment>
+      {Array.from({ length: count }).map((_, i) => (
+        <div key={i} className="add-meal-recipe-item add-meal-recipe-skeleton-item" aria-hidden="true">
+          <span className="skeleton-block add-meal-recipe-skeleton-title" />
+          <span className="skeleton-block add-meal-recipe-skeleton-kcal" />
+        </div>
+      ))}
+    </Fragment>
+  )
+}
 
 /**
  * 식단 기록 추가 모달. "저장된 레시피에서 선택" 또는 "재료 직접입력" 두 가지 방식을 지원한다.
@@ -145,7 +160,7 @@ function RecipeLogForm({ mealDate, mealType, onBack, onSubmitted }) {
       />
       {error && <div className="form-error">{error}</div>}
       <div className="add-meal-recipe-list">
-        {loading && <p className="form-hint">불러오는 중...</p>}
+        {loading && <RecipeListSkeleton />}
         {!loading && filtered.length === 0 && <p className="form-hint">저장된 레시피가 없어요.</p>}
         {!loading &&
           filtered.map((recipe) => (

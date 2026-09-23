@@ -13,12 +13,28 @@
 
 .dashboard-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   padding: 28px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dashboard-content::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .dashboard-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
 }
 
 @media (max-width: 720px) {
   .dashboard-content {
-    padding: 16px 16px calc(72px + env(safe-area-inset-bottom, 0px));
+    padding: 16px 16px calc(var(--mobile-tabbar-height) + env(safe-area-inset-bottom, 0px));
   }
 }

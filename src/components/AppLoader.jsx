@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
-import CategoryIcon from './CategoryIcon'
-import './AppLoader.css'
+import { useEffect, useState } from 'react';
+import CategoryIcon from './CategoryIcon';
+import './AppLoader.css';
 
 /** CategoryIcon에 쓰이는 음식 카테고리들을 순서대로 돌려가며 보여준다. */
 const CATEGORY_CYCLE = [
@@ -15,24 +15,23 @@ const CATEGORY_CYCLE = [
   '양념·소스',
   '간식·디저트',
   '음료·주류',
-]
+];
 
 export default function AppLoader() {
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const id = setInterval(() => {
-      setIndex((i) => (i + 1) % CATEGORY_CYCLE.length)
-    }, 500)
-    return () => clearInterval(id)
-  }, [])
+      setIndex((i) => (i + 1) % CATEGORY_CYCLE.length);
+    }, 500);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div className="app-loader">
       <div className="app-loader-icon" key={index}>
         <CategoryIcon categoryName={CATEGORY_CYCLE[index]} size={56} />
       </div>
-      <p className="app-loader-text">불러오는 중...</p>
     </div>
-  )
+  );
 }

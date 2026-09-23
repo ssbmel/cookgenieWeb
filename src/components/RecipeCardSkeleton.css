@@ -12,9 +12,14 @@
 .skeleton-block {
   display: block;
   border-radius: 6px;
-  background: linear-gradient(90deg, var(--color-border) 25%, var(--color-bg) 50%, var(--color-border) 75%);
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-container-high) 25%,
+    #ffe9d6 50%,
+    var(--color-surface-container-high) 75%
+  );
   background-size: 200% 100%;
-  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  animation: skeleton-block-sweep 1.4s ease-in-out infinite;
 }
 
 .skeleton-type {
@@ -41,7 +46,7 @@
   margin-top: 2px;
 }
 
-@keyframes skeleton-shimmer {
+@keyframes skeleton-block-sweep {
   0% {
     background-position: 200% 0;
   }

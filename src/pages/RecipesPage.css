@@ -1,6 +1,7 @@
 .recipes-page {
   position: relative;
   min-height: calc(100% + 1px);
+  flex-shrink: 0;
   padding-bottom: 60px;
 }
 
@@ -83,6 +84,7 @@
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 14px;
   overflow-x: hidden;
+  padding: 6px;
 }
 
 .recipes-grid > * {
@@ -106,6 +108,13 @@
 
 .recipes-fab:hover:not(:disabled) {
   background: var(--color-primary-dark);
+}
+
+/* 모바일에서는 하단 탭바에 가려지지 않게 그 높이만큼 띄운다 */
+@media (max-width: 720px) {
+  .recipes-fab {
+    bottom: calc(32px + var(--mobile-tabbar-height) + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 .recipes-fab:disabled {

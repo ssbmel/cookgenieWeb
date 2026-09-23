@@ -14,13 +14,17 @@ import * as ingredientApi from '../api/ingredient';
 import * as fridgeApi from '../api/fridge';
 import CategoryIcon from './CategoryIcon';
 import ReferenceNutritionTag from './ReferenceNutritionTag';
+import NutritionFactsLine from './NutritionFactsLine';
 import ReceiptScanModal from './ReceiptScanModal';
+import IngredientCategoryGridSkeleton from './IngredientCategoryGridSkeleton';
+import { nutritionFacts, nutritionSourceLabel } from '../utils/nutrition';
 import {
   addRecentIngredient,
   getRecentIngredients,
 } from '../utils/recentIngredients';
 import Button from './Button';
 import '../styles/forms.css';
+import './RecipeCardSkeleton.css';
 import './IngredientPicker.css';
 
 /** FridgeItemResponse -> IngredientPicker/ReferenceNutritionTag가 기대하는 "재료" 모양으로 변환. */
@@ -117,6 +121,22 @@ function QuickPickChips({ ingredients, onPick }) {
   );
 }
 
+/** fridgeIngredients를 불러오는 동안 칩 목록 자리에 크기가 비슷한 자리표시자를 보여줘서, 로딩이 끝났을 때
+ * 그 부분만 갑자기 생기면서 모달 높이가 튀는 걸(레이아웃 시프트) 막는다. */
+function QuickPickChipsSkeleton({ count = 5 }) {
+  return (
+    <div className="ingredient-recent-chips" aria-hidden="true">
+      {Array.from({ length: count }).map((_, i) => (
+        <span
+          key={i}
+          className="skeleton-block ingredient-recent-chip-skeleton"
+          style={{ width: 60 + ((i * 17) % 40) }}
+        />
+      ))}
+    </div>
+  );
+}
+
 /**
  * 식재료 검색 + 등록/수정/삭제까지 처리하고, 선택이 끝나면 onSelect(ingredient)를 호출한다.
  * 새 식재료 등록은 카테고리 그리드 -> 추천 재료 그리드 2단계로 진행되고, 목록에 없으면 직접 입력할 수 있다.
@@ -147,6 +167,7 @@ export default function IngredientPicker({
   const [scanMode, setScanMode] = useState(null); // null | 'receipt' | 'orderHistory' | 'product'
   const [recentIngredients] = useState(getRecentIngredients);
   const [fridgeIngredients, setFridgeIngredients] = useState([]);
+  const [fridgeIngredientsLoading, setFridgeIngredientsLoading] = useState(false);
   const [nutritionForm, setNutritionForm] = useState(EMPTY_NUTRITION_FORM);
   const [estimating, setEstimating] = useState(false);
   const [officialKeyword, setOfficialKeyword] = useState('');
@@ -175,6 +196,7 @@ export default function IngredientPicker({
       setFridgeIngredients([]);
       return;
     }
+    setFridgeIngredientsLoading(true);
     fridgeApi
       .getFridgeItems(fridgeId)
       .then((items) => {
@@ -187,7 +209,8 @@ export default function IngredientPicker({
         }
         setFridgeIngredients(deduped);
       })
-      .catch(() => setFridgeIngredients([]));
+      .catch(() => setFridgeIngredients([]))
+      .finally(() => setFridgeIngredientsLoading(false));
   }, [fridgeId]);
 
   useEffect(() => {
@@ -806,7 +829,7 @@ export default function IngredientPicker({
 
         <p className="ingredient-picker-hint">자주 찾는 재료</p>
         {suggestionsLoading ? (
-          <p className="form-hint">불러오는 중...</p>
+          <IngredientCategoryGridSkeleton />
         ) : (
           <div className="ingredient-category-grid">
             {suggestions.map((name) => (
@@ -924,62 +947,81 @@ export default function IngredientPicker({
             </p>
           )}
           {!loading &&
-            results.map((ingredient) => (
-              <div key={ingredient.id} className="ingredient-picker-result">
-                <button
-                  type="button"
-                  className="ingredient-picker-result-main"
-                  onClick={() => selectIngredient(ingredient)}
-                >
-                  <CategoryIcon
-                    categoryName={ingredient.categoryName}
-                    size={32}
-                  />
-                  <div className="ingredient-picker-result-text">
-                    <div className="ingredient-picker-result-name-container">
-                      <div className="ingredient-picker-result-info">
-                        <span className="ingredient-picker-result-name">
-                          {ingredient.name}
-                        </span>
-                        <span className="ingredient-picker-result-tags">
-                          {ingredient.categoryName && (
-                            <span className="ingredient-picker-result-category">
-                              {ingredient.categoryName}
-                            </span>
-                          )}
-                        </span>
-                      </div>
+            results.map((ingredient) => {
+              const nutrition = nutritionFacts(ingredient);
+              const source = nutritionSourceLabel(
+                ingredient.dataSource,
+                ingredient.isVerified,
+              );
+              return (
+                <div key={ingredient.id} className="ingredient-picker-result">
+                  <button
+                    type="button"
+                    className="ingredient-picker-result-main"
+                    onClick={() => selectIngredient(ingredient)}
+                  >
+                    <CategoryIcon
+                      categoryName={ingredient.categoryName}
+                      size={32}
+                    />
+                    <div className="ingredient-picker-result-text">
+                      <div className="ingredient-picker-result-name-container">
+                        <div className="ingredient-picker-result-info">
+                          <span className="ingredient-picker-result-name">
+                            {ingredient.name}
+                          </span>
+                          <span className="ingredient-picker-result-tags">
+                            {ingredient.categoryName && (
+                              <span className="ingredient-picker-result-category">
+                                {ingredient.categoryName}
+                              </span>
+                            )}
+                          </span>
+                        </div>
 
-                      <div className="ingredient-picker-result-actions">
-                        <Button
-                          variant="warning"
-                          aria-label="수정"
-                          title="수정"
-                          size="sm"
-                          onClick={() => openEditForm(ingredient)}
-                        >
-                          <Pencil size={16} aria-hidden="true" />
-                        </Button>
-                        <Button
-                          variant="danger"
-                          aria-label="삭제"
-                          title="삭제"
-                          size="sm"
-                          onClick={() => handleDelete(ingredient)}
-                        >
-                          <Trash2 size={16} aria-hidden="true" />
-                        </Button>
+                        <div className="ingredient-picker-result-actions">
+                          <Button
+                            variant="warning"
+                            aria-label="수정"
+                            title="수정"
+                            size="sm"
+                            onClick={() => openEditForm(ingredient)}
+                          >
+                            <Pencil size={16} aria-hidden="true" />
+                          </Button>
+                          <Button
+                            variant="danger"
+                            aria-label="삭제"
+                            title="삭제"
+                            size="sm"
+                            onClick={() => handleDelete(ingredient)}
+                          >
+                            <Trash2 size={16} aria-hidden="true" />
+                          </Button>
+                        </div>
                       </div>
+                      {nutrition && (
+                        <NutritionFactsLine
+                          basis={nutrition.basis}
+                          facts={nutrition.facts}
+                          source={source}
+                        />
+                      )}
                     </div>
-                    <ReferenceNutritionTag ingredient={ingredient} />
-                  </div>
-                </button>
-              </div>
-            ))}
+                  </button>
+                </div>
+              );
+            })}
         </div>
       ) : (
         <>
-          {fridgeId && fridgeIngredients.length > 0 && (
+          {fridgeId && fridgeIngredientsLoading && (
+            <PickerSection icon={Refrigerator} title="내 냉장고에 있는 재료">
+              <QuickPickChipsSkeleton />
+            </PickerSection>
+          )}
+
+          {fridgeId && !fridgeIngredientsLoading && fridgeIngredients.length > 0 && (
             <PickerSection icon={Refrigerator} title="내 냉장고에 있는 재료">
               <QuickPickChips
                 ingredients={fridgeIngredients}

@@ -38,7 +38,7 @@
 /* 소비기한 정보가 없으면 긴급도가 없으므로 점 표시 없이 단순 태그로 보여준다. */
 .expiry-badge--neutral {
   padding-left: 10px;
-  background: #eef1f0;
+  background: var(--color-surface-container-high);
   color: var(--color-ink-faint);
   font-weight: 700;
 }

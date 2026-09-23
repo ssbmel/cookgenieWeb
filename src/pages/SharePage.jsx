@@ -4,7 +4,24 @@ import { useFridge } from '../context/FridgeContext'
 import * as fridgeApi from '../api/fridge'
 import Button from '../components/Button'
 import '../styles/forms.css'
+import '../components/RecipeCardSkeleton.css'
 import './SharePage.css'
+
+/** 멤버 목록을 불러오는 동안 .member-row 자리 크기 그대로 자리표시자를 보여준다. */
+function MemberListSkeleton({ count = 3 }) {
+  return (
+    <ul className="member-list" aria-hidden="true">
+      {Array.from({ length: count }).map((_, i) => (
+        <li key={i} className="member-row">
+          <div className="member-info">
+            <span className="skeleton-block share-skeleton-nickname" />
+            <span className="skeleton-block share-skeleton-tag" />
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 export default function SharePage() {
   const { user } = useAuth()
@@ -189,7 +206,7 @@ export default function SharePage() {
         {!selectedFridge ? (
           <p className="form-hint">멤버 목록을 보려면 먼저 냉장고를 선택하거나 만들어주세요.</p>
         ) : membersLoading ? (
-          <p className="form-hint">불러오는 중...</p>
+          <MemberListSkeleton />
         ) : (
           <>
             {membersError && <div className="form-error">{membersError}</div>}

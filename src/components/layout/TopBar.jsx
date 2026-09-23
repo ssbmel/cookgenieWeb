@@ -1,21 +1,25 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { LogOut, Plus, Settings } from 'lucide-react'
-import { useAuth } from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import { Bell, Plus, ReceiptText, Sparkles } from 'lucide-react'
 import { useFridge } from '../../context/FridgeContext'
+import * as recipeApi from '../../api/recipe'
 import Modal from '../Modal'
 import Button from '../Button'
 import Dropdown from '../Dropdown'
+import GenerateRecipeModal from '../GenerateRecipeModal'
+import ReceiptScanModal from '../ReceiptScanModal'
 import '../../styles/forms.css'
 import './TopBar.css'
 
 export default function TopBar() {
-  const { user, logout } = useAuth()
+  const navigate = useNavigate()
   const { fridges, selectedFridgeId, setSelectedFridgeId, createFridge } = useFridge()
   const [creating, setCreating] = useState(false)
   const [newName, setNewName] = useState('')
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const [showGenerate, setShowGenerate] = useState(false)
+  const [showReceiptScan, setShowReceiptScan] = useState(false)
 
   async function handleCreate(event) {
     event.preventDefault()
@@ -31,6 +35,11 @@ export default function TopBar() {
     } finally {
       setSubmitting(false)
     }
+  }
+
+  async function handleGenerate(note, useFridgeIngredients) {
+    await recipeApi.generateRecipe(selectedFridgeId, note, useFridgeIngredients)
+    navigate('/recipes')
   }
 
   return (
@@ -60,14 +69,21 @@ export default function TopBar() {
       </div>
 
       <div className="topbar-user">
-        <span className="topbar-nickname">{user?.nickname}님</span>
-        <Link to="/settings" className="btn btn-ghost topbar-settings" aria-label="설정" title="설정">
-          <Settings size={16} aria-hidden="true" />
-          <span className="topbar-label">설정</span>
-        </Link>
-        <Button variant="ghost" className="topbar-logout" aria-label="로그아웃" title="로그아웃" onClick={logout}>
-          <LogOut size={16} aria-hidden="true" />
-          <span className="topbar-label">로그아웃</span>
+        <button type="button" className="topbar-bell" aria-label="알림" title="알림">
+          <Bell size={18} aria-hidden="true" />
+        </button>
+        <Button
+          variant="ghost"
+          className="topbar-ocr-btn"
+          disabled={!selectedFridgeId}
+          onClick={() => setShowReceiptScan(true)}
+        >
+          <ReceiptText size={16} aria-hidden="true" />
+          <span className="topbar-label">영수증 OCR 등록</span>
+        </Button>
+        <Button className="topbar-generate-btn" disabled={!selectedFridgeId} onClick={() => setShowGenerate(true)}>
+          <Sparkles size={16} aria-hidden="true" />
+          <span className="topbar-label">AI 냉털 레시피 생성</span>
         </Button>
       </div>
 
@@ -102,6 +118,21 @@ export default function TopBar() {
             </div>
           </form>
         </Modal>
+      )}
+
+      {showGenerate && (
+        <GenerateRecipeModal onClose={() => setShowGenerate(false)} onGenerate={handleGenerate} />
+      )}
+
+      {showReceiptScan && (
+        <ReceiptScanModal
+          fridgeId={selectedFridgeId}
+          onClose={() => setShowReceiptScan(false)}
+          onComplete={async () => {
+            setShowReceiptScan(false)
+            navigate('/fridge')
+          }}
+        />
       )}
     </header>
   )

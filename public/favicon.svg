@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <rect width="48" height="48" rx="12" fill="#0EA37E"/>
-  <rect x="13" y="8" width="22" height="32" rx="4" fill="#F5FBF9"/>
-  <rect x="13" y="18" width="22" height="3" fill="#0EA37E"/>
-  <circle cx="18" cy="13" r="1.6" fill="#0EA37E"/>
+  <rect width="48" height="48" rx="13" fill="#FF5E36"/>
+  <text x="24" y="25" text-anchor="middle" dominant-baseline="central"
+        font-family="Arial, Helvetica, sans-serif" font-weight="800"
+        font-size="21" fill="#FFFFFF">CG</text>
 </svg>

@@ -1,3 +1,15 @@
+/* 모바일에서는 "달력" 탭을 볼 때만 달력 그리드가 남은 화면 높이를 꽉 채우게 한다.
+   "오늘" 탭(식사 목록)에서까지 적용하면 목록이 강제로 눌려서, 넘치는 내용이 하단 padding을
+   무시하고 그대로 화면 밖(하단 nav 뒤)으로 흘러넘친다. */
+@media (max-width: 720px) {
+  .calendar-page--fill {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+}
+
 .calendar-page-header {
   margin-bottom: 4px;
 }

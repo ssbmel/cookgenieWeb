@@ -1,0 +1,35 @@
+.daily-meal-skeleton-calorie {
+  width: 70px;
+  height: 32px;
+}
+
+.daily-meal-skeleton-target {
+  width: 90px;
+  height: 22px;
+  border-radius: 999px;
+  margin-left: auto;
+}
+
+.daily-meal-skeleton-macro-label {
+  width: 70%;
+  height: 12px;
+  margin: 0 auto;
+}
+
+.daily-meal-skeleton-macro-value {
+  width: 50%;
+  height: 14px;
+  margin: 4px auto 0;
+}
+
+.daily-meal-skeleton-slot-label {
+  width: 48px;
+  height: 14px;
+}
+
+.daily-meal-skeleton-slot-kcal {
+  width: 56px;
+  height: 13px;
+  margin-left: auto;
+  margin-right: 8px;
+}

@@ -64,6 +64,16 @@
   font-size: 12px;
 }
 
+.add-meal-recipe-skeleton-title {
+  width: 55%;
+  height: 14px;
+}
+
+.add-meal-recipe-skeleton-kcal {
+  width: 60px;
+  height: 12px;
+}
+
 .add-meal-selected-recipe {
   display: flex;
   justify-content: space-between;

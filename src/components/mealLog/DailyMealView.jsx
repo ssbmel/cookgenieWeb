@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import * as mealLogApi from '../../api/mealLog'
 import AddMealLogModal from './AddMealLogModal'
+import DailyMealViewSkeleton from './DailyMealViewSkeleton'
 import { MEAL_TYPES, MEAL_TYPE_LABEL, addDays, formatDateLabel, todayString } from '../../utils/mealType'
 import './DailyMealView.css'
 
@@ -71,7 +72,7 @@ export default function DailyMealView({ date, onChangeDate }) {
       </div>
 
       {error && <div className="form-error">{error}</div>}
-      {loading && <p className="form-hint">불러오는 중...</p>}
+      {loading && <DailyMealViewSkeleton />}
 
       {!loading && daily && (
         <>

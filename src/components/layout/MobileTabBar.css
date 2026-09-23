@@ -10,8 +10,10 @@
     bottom: 0;
     z-index: 30;
     display: flex;
-    background: var(--color-surface);
-    border-top: 1px solid var(--color-border);
+    background: rgba(250, 249, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.03);
     padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
@@ -35,7 +37,38 @@
 }
 
 .mobile-tab--active {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+/* AI 레시피 탭: 원형 FAB처럼 떠 있는 형태로 강조 */
+.mobile-tab--special {
+  margin-top: -20px;
+}
+
+.mobile-tab-fab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(255, 94, 54, 0.35);
+  transition: transform 0.15s ease;
+}
+
+.mobile-tab-fab svg {
+  color: #fff;
+}
+
+.mobile-tab--special span:last-child {
+  margin-top: 2px;
+}
+
+.mobile-tab--special.mobile-tab--active .mobile-tab-fab {
+  transform: scale(1.04);
 }
 
 @media (max-width: 360px) {
